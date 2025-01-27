@@ -27,7 +27,7 @@ class Restaurant(db.Model, SerializerMixin):
 
 
     # add serialization rules
-    serialize_rules = ('-restaurant_pizzas',)
+    serialize_rules = ('-restaurant_pizzas',"-pizzas")
 
 
     def __repr__(self):
@@ -65,6 +65,9 @@ class RestaurantPizza(db.Model, SerializerMixin):
     # add relationships
     restaurant_id = db.Column(db.Integer, db.ForeignKey("restaurants.id"), nullable=False)
     pizza_id = db.Column(db.Integer, db.ForeignKey("pizzas.id"), nullable=False)
+
+    pizza = db.relationship(Pizza, back_populates="restaurant_pizzas")
+    restaurant = db.relationship(Restaurant, back_populates="restaurant_pizzas")
 
     # add serilazation rules
     serialize_rules = ('-restaurant', '-pizza',) 
